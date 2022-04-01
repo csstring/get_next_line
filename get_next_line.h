@@ -19,5 +19,5 @@ char	*ft_get_line(int fd, t_lst *node);
 int		ft_new_node(int fd, t_lst **head);
 t_lst	*fd_find(int fd, t_lst **head);
 char	*get_next_line(int fd);
-
+char	*ft_strdup(char *S1, size_t size);
 #endif

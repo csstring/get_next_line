@@ -6,7 +6,7 @@
 /*   By: schoe <schoe@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 16:57:29 by schoe             #+#    #+#             */
-/*   Updated: 2022/04/01 18:37:02 by schoe            ###   ########.fr       */
+/*   Updated: 2022/04/01 21:41:06 by schoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line_bonus.h"
@@ -59,10 +59,7 @@ char	*ft_get_line(int fd, t_lst *node)
 	{
 		len = read(fd, buf, BUFFER_SIZE);
 		if (len > 0)
-		{
-			buf[len] = '\0';
 			node -> buff = ft_strjoin(node -> buff, buf, len);
-		}
 		else
 			return (NULL);
 	}

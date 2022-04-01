@@ -6,11 +6,12 @@
 /*   By: schoe <schoe@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 16:57:29 by schoe             #+#    #+#             */
-/*   Updated: 2022/04/01 18:36:32 by schoe            ###   ########.fr       */
+/*   Updated: 2022/04/01 22:23:11 by schoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "get_next_line_bonus.h"
+#include "get_next_line.h"
 #include <unistd.h>
+#include <stdio.h>
 int	find_LF(char *buff)
 {
 	int	i;
@@ -50,7 +51,7 @@ void	clear_buf(t_lst *node, int i_LF, int len)
 
 char	*ft_get_line(int fd, t_lst *node)
 {
-	char	buf[BUFFER_SIZE + 1];
+	char	buf[BUFFER_SIZE];
 	int		len;
 
 	if (find_LF(node -> buff) != -1)
@@ -59,10 +60,7 @@ char	*ft_get_line(int fd, t_lst *node)
 	{
 		len = read(fd, buf, BUFFER_SIZE);
 		if (len > 0)
-		{
-			buf[len] = '\0';
 			node -> buff = ft_strjoin(node -> buff, buf, len);
-		}
 		else
 			return (NULL);
 	}

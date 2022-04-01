@@ -6,10 +6,10 @@
 /*   By: schoe <schoe@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 11:29:52 by schoe             #+#    #+#             */
-/*   Updated: 2022/04/01 18:29:36 by schoe            ###   ########.fr       */
+/*   Updated: 2022/04/01 21:53:02 by schoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "get_next_line_bonus.h"
+#include "get_next_line.h"
 
 int	ft_strlen(char *str)
 {
@@ -47,6 +47,7 @@ char	*ft_strjoin(char *s1, char *s2, size_t s2_len)
 		return (NULL);
 	ft_strlcpy(temp, s1, s1_len + 1);
 	ft_strlcpy(temp + s1_len, s2, s2_len + 1);
+	free(s1);
 	return (temp);
 }
 
@@ -74,7 +75,7 @@ int	ft_new_node(int fd, t_lst **head)
 	return (1);
 }
 
-char	*ft_strdup(const char *s1, size_t size)
+char	*ft_strdup(char *s1, size_t size)
 {
 	size_t	i;
 	char	*s2;

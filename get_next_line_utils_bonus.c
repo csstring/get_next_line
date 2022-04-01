@@ -6,7 +6,7 @@
 /*   By: schoe <schoe@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 11:29:52 by schoe             #+#    #+#             */
-/*   Updated: 2022/04/01 17:56:43 by schoe            ###   ########.fr       */
+/*   Updated: 2022/04/01 21:41:20 by schoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line_bonus.h"
@@ -47,6 +47,7 @@ char	*ft_strjoin(char *s1, char *s2, size_t s2_len)
 		return (NULL);
 	ft_strlcpy(temp, s1, s1_len + 1);
 	ft_strlcpy(temp + s1_len, s2, s2_len + 1);
+	free(s1);
 	return (temp);
 }
 
