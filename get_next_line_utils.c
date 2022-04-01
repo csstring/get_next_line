@@ -6,7 +6,7 @@
 /*   By: schoe <schoe@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 11:29:52 by schoe             #+#    #+#             */
-/*   Updated: 2022/04/01 12:29:15 by schoe            ###   ########.fr       */
+/*   Updated: 2022/04/01 18:29:36 by schoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line_bonus.h"
@@ -60,26 +60,34 @@ int	ft_new_node(int fd, t_lst **head)
 		return (0);
 	new -> fd_index = fd;
 	new -> next = NULL;
-	str = (char *)malloc(sizeof(char) * 1);
+	str = (char *)malloc(1);
 	str[0] = '\0';
 	new -> buff = str;
 	if (*head == NULL)
 		*head = new;
 	else
-		//
+	{
+		free((*head)->buff);
+		free(*head);
+		*head = new;
+	}
 	return (1);
 }
 
-t_lst	*fd_find(int fd, t_lst **head)
+char	*ft_strdup(const char *s1, size_t size)
 {
-	t_lst	*temp;
+	size_t	i;
+	char	*s2;
 
-	temp = *head;
-	while (temp != NULL)
+	i = 0;
+	s2 = (char *)malloc(sizeof(char) * (size + 1));
+	if (s2 == NULL)
+		return (NULL);
+	while (i < size)
 	{
-		if (temp -> fd_index == fd)
-			return (temp);
-		temp = temp -> next;
+		s2[i] = s1[i];
+		i++;
 	}
-	return (temp);
+	s2[i] = '\0';
+	return (s2);
 }
