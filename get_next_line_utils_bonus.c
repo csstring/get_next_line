@@ -6,7 +6,7 @@
 /*   By: schoe <schoe@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 11:29:52 by schoe             #+#    #+#             */
-/*   Updated: 2022/04/01 21:41:20 by schoe            ###   ########.fr       */
+/*   Updated: 2022/04/04 22:35:25 by schoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line_bonus.h"
@@ -40,13 +40,24 @@ char	*ft_strjoin(char *s1, char *s2, size_t s2_len)
 {
 	char	*temp;
 	size_t	s1_len;
+	size_t	i;
+	size_t	k;
 
+	i = 0;
+	k = 0;
+	if (s1 == NULL)
+		return (ft_strdup(s2, s2_len));
 	s1_len = ft_strlen(s1);
 	temp = (char *)malloc(sizeof(char) * (s1_len + s2_len + 1));
 	if (temp == NULL)
 		return (NULL);
-	ft_strlcpy(temp, s1, s1_len + 1);
-	ft_strlcpy(temp + s1_len, s2, s2_len + 1);
+	while (i < s1_len)
+		temp[i++] = s1[k++];
+	temp[i] = '\0';
+	k = 0;
+	while (i < s1_len + s2_len)
+		temp[i++] = s2[k++];
+	temp[i] = '\0';
 	free(s1);
 	return (temp);
 }
@@ -54,7 +65,6 @@ char	*ft_strjoin(char *s1, char *s2, size_t s2_len)
 int	ft_new_node(int fd, t_lst **head)
 {
 	t_lst	*new;
-	char	*str;
 	t_lst	*temp;
 
 	temp = *head;
@@ -63,23 +73,22 @@ int	ft_new_node(int fd, t_lst **head)
 		return (0);
 	new -> fd_index = fd;
 	new -> next = NULL;
-	str = (char *)malloc(1);
-	str[0] = '\0';
-	new -> buff = str;
-	if (temp == NULL)
+	new -> buff = NULL;
+	new -> i_EOF = 1;
+	if (*head == NULL)
 		*head = new;
 	else
 	{
-		while (temp -> next != NULL)
+		while (temp)
 			temp = temp -> next;
-		temp -> next = new;
+		temp = new;
 	}
 	return (1);
 }
 
-char	*ft_strdup(const char *s1, size_t size)
+char	*ft_strdup(char *s1, int size)
 {
-	size_t	i;
+	int		i;
 	char	*s2;
 
 	i = 0;

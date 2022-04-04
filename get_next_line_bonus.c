@@ -6,16 +6,19 @@
 /*   By: schoe <schoe@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 16:57:29 by schoe             #+#    #+#             */
-/*   Updated: 2022/04/01 21:41:06 by schoe            ###   ########.fr       */
+/*   Updated: 2022/04/04 22:35:27 by schoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line_bonus.h"
 #include <unistd.h>
-int	find_LF(char *buff)
+
+int	find_line(char *buff)
 {
 	int	i;
 
 	i = 0;
+	if (buff == NULL)
+		return (-1);
 	while (buff[i])
 	{
 		if (buff[i] == '\n')
@@ -36,32 +39,44 @@ t_lst	*fd_find(int fd, t_lst **head)
 			return (temp);
 		temp = temp -> next;
 	}
-	return (temp);
+	return (NULL);
 }
 
 void	clear_buf(t_lst *node, int i_LF, int len)
 {
 	char	*temp;
 
-	temp = ft_strdup((node -> buff) + (i_LF + 1), len - i_LF);
+	len = 0;
+	if ((node -> buff)[i_LF + 1] != '\0')
+		temp = ft_strdup((node -> buff) + (i_LF + 1), len - i_LF);
+	else
+		temp = NULL;
 	free(node -> buff);
 	node -> buff = temp;
 }
 
 char	*ft_get_line(int fd, t_lst *node)
 {
-	char	buf[BUFFER_SIZE + 1];
+	char	buf[BUFFER_SIZE];
 	int		len;
 
-	if (find_LF(node -> buff) != -1)
-		clear_buf(node, find_LF(node -> buff), ft_strlen(node -> buff));
-	while (find_LF(node -> buff) == -1)
+	if (find_line(node -> buff) != -1)
+		clear_buf(node, find_line(node -> buff), ft_strlen(node -> buff));
+	if (node -> i_EOF == 0)
+	{
+		free(node -> buff);
+		return (NULL);
+	}
+	while (find_line(node -> buff) == -1)
 	{
 		len = read(fd, buf, BUFFER_SIZE);
 		if (len > 0)
 			node -> buff = ft_strjoin(node -> buff, buf, len);
 		else
-			return (NULL);
+		{
+			node -> i_EOF = 0;
+			return (node -> buff);
+		}
 	}
 	return (node -> buff);
 }
@@ -83,9 +98,14 @@ char	*get_next_line(int fd)
 	}
 	str = ft_get_line(fd, fd_find(fd, head));
 	if (str == NULL)
+	{
+		free(*head);
+		free(head);
+		head = NULL;
 		return (NULL);
-	else if (find_LF(str) != -1)
-		return (ft_strdup(str, find_LF(str) + 1));
+	}
+	else if (find_line(str) != -1)
+		return (ft_strdup(str, find_line(str) + 1));
 	else
-		return (str);
+		return (ft_strdup(str, ft_strlen(str)));
 }

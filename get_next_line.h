@@ -6,11 +6,12 @@
 typedef struct s_lst
 {
 	int				fd_index;
+	int	i_EOF;
 	char			*buff;
 	struct s_lst	*next;
 }	t_lst;
 
-int		find_LF(char *buff);
+int		find_line(char *buff);
 void	clear_buf(t_lst *node, int i_LF, int len);
 int		ft_strlen(char *str);
 char	*ft_strjoin(char *s1, char *s2, size_t s2_len);
