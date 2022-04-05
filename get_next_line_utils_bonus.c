@@ -6,7 +6,7 @@
 /*   By: schoe <schoe@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 11:29:52 by schoe             #+#    #+#             */
-/*   Updated: 2022/04/05 14:58:09 by schoe            ###   ########.fr       */
+/*   Updated: 2022/04/05 16:20:53 by schoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line_bonus.h"
@@ -28,10 +28,11 @@ void	ft_node_clear(t_lst **head, int	fd)
 
 	//if (*head == NULL)
 	//	free(head);
+	//temp = fd_find(fd, head);
 	temp_lst = head;
-	temp = fd_find(fd, head);
-	if (*head == temp)
+	if (*head == fd_find(fd, head))
 	{
+		temp = *head;
 		*head = (*head) -> next;
 		free(temp);
 	}
@@ -41,7 +42,8 @@ void	ft_node_clear(t_lst **head, int	fd)
 		{
 			if ((*temp_lst)->next -> fd_index == fd)
 			{
-				(*temp_lst)->next =(*temp_lst)->next->next;
+				temp = (*temp_lst)->next;
+				(*temp_lst)->next = (*temp_lst)->next->next;
 				free(temp);
 				break ;
 			}
@@ -110,9 +112,9 @@ char	*ft_strjoin(char *s1, char *s2, size_t s2_len)
 int	ft_new_node(int fd, t_lst **head)
 {
 	t_lst	*new;
-	t_lst	*temp;
+	t_lst	**temp;
 
-	temp = *head;
+	temp = head;
 	new = (t_lst *)malloc(sizeof(t_lst));
 	if (new == NULL)
 		return (0);
@@ -124,9 +126,9 @@ int	ft_new_node(int fd, t_lst **head)
 		*head = new;
 	else
 	{
-		while (temp)
-			temp = temp -> next;
-		temp = new;
+		while ((*temp))
+			(*temp) = (*temp) -> next;
+		*temp = new;
 	}
 	return (1);
 }
