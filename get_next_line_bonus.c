@@ -6,7 +6,7 @@
 /*   By: schoe <schoe@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 16:57:29 by schoe             #+#    #+#             */
-/*   Updated: 2022/04/04 22:35:27 by schoe            ###   ########.fr       */
+/*   Updated: 2022/04/05 14:51:38 by schoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line_bonus.h"
@@ -46,7 +46,6 @@ void	clear_buf(t_lst *node, int i_LF, int len)
 {
 	char	*temp;
 
-	len = 0;
 	if ((node -> buff)[i_LF + 1] != '\0')
 		temp = ft_strdup((node -> buff) + (i_LF + 1), len - i_LF);
 	else

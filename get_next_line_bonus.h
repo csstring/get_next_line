@@ -21,4 +21,5 @@ int		ft_new_node(int fd, t_lst **head);
 t_lst	*fd_find(int fd, t_lst **head);
 char	*get_next_line(int fd);
 char	*ft_strdup(char *S1, int size);
+void	ft_node_clear(t_lst **head, int fd);
 #endif

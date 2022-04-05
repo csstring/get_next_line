@@ -6,7 +6,7 @@
 /*   By: schoe <schoe@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 16:57:29 by schoe             #+#    #+#             */
-/*   Updated: 2022/04/04 16:36:25 by schoe            ###   ########.fr       */
+/*   Updated: 2022/04/05 15:01:03 by schoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line.h"
@@ -98,9 +98,10 @@ char	*get_next_line(int fd)
 	str = ft_get_line(fd, fd_find(fd, head));
 	if (str == NULL)
 	{
-		free(*head);
-		free(head);
-		head = NULL;
+		ft_node_clear(head, fd);
+		//free(*head);
+		//free(head);
+		//head = NULL;
 		return (NULL);
 	}
 	else if (find_line(str) != -1)
