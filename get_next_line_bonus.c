@@ -6,7 +6,7 @@
 /*   By: schoe <schoe@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 16:57:29 by schoe             #+#    #+#             */
-/*   Updated: 2022/04/05 18:40:01 by schoe            ###   ########.fr       */
+/*   Updated: 2022/04/06 17:58:26 by schoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line_bonus.h"
@@ -88,22 +88,19 @@ char	*get_next_line(int fd)
 	if (head == NULL)
 	{
 		head = (t_lst **)malloc(sizeof(t_lst *));
+		if (head == NULL)
+			return (NULL);
 		*head = NULL;
 	}
 	if (!(fd_find(fd, head)))
-	{
 		if (!(ft_new_node(fd, head)))
 			return (NULL);
-	}
 	str = ft_get_line(fd, fd_find(fd, head));
 	if (str == NULL)
 	{
 		ft_node_clear(head, fd);
 		if (*head == NULL)
-		{
-			free(head);
 			head = NULL;
-		}
 		return (NULL);
 	}
 	else if (find_line(str) != -1)

@@ -6,7 +6,7 @@
 /*   By: schoe <schoe@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 11:29:52 by schoe             #+#    #+#             */
-/*   Updated: 2022/04/05 18:40:03 by schoe            ###   ########.fr       */
+/*   Updated: 2022/04/06 17:58:23 by schoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line_bonus.h"
@@ -21,68 +21,30 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
-void	ft_node_clear(t_lst **head, int	fd)
+void	ft_node_clear(t_lst **head, int fd)
 {
-	t_lst *temp;
-	t_lst **temp_lst;
+	t_lst	*temp;
+	t_lst	*first_node;
 
-	//if (*head == NULL)
-	//	free(head);
-	//temp = fd_find(fd, head);
-	temp_lst = head;
 	if ((*head)->fd_index == fd)
 	{
 		temp = *head;
-		*head = (*head) -> next;
+		*head = (*head)-> next;
 		free(temp);
 	}
 	else
 	{
-		while ((*temp_lst) -> next)
-		{
-			if ((*temp_lst)->next -> fd_index == fd)
-			{
-				temp = (*temp_lst)->next;
-				(*temp_lst)->next = (*temp_lst)->next->next;
-				free(temp);
-				break ;
-			}
-			*temp_lst = (*temp_lst) -> next;
-		}
+		first_node = *head;
+		temp = fd_find(fd, head);
+		while ((*head)-> next -> fd_index != fd)
+			*head = (*head)-> next;
+		(*head)->next = (*head)->next -> next;
+		free(temp);
+		*head = first_node;
 	}
+	if (*head == NULL)
+		free(head);
 }
-
-/*void	ft_strlcpy(char *dst, const char *src, size_t size)
-{
-	size_t	i;
-
-	i = 0;
-	if (size == 0)
-		return ;
-	while (i < size - 1)
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = '\0';
-}
-
-char	*ft_strjoin(char *s1, char *s2, size_t s2_len)
-{
-	char	*temp;
-	size_t		s1_len;
-
-	if (s1 == NULL)
-		return (ft_strdup(s2, s2_len));
-	s1_len = ft_strlen(s1);
-	temp = (char *)malloc(sizeof(char) * (s1_len + s2_len + 1));
-	if (temp == NULL)
-		return (NULL);
-	ft_strlcpy(temp, s1, s1_len + 1);
-	ft_strlcpy(temp + s1_len, s2, s2_len + 1);
-	free(s1);
-	return (temp);
-}*/
 
 char	*ft_strjoin(char *s1, char *s2, size_t s2_len)
 {
@@ -112,9 +74,7 @@ char	*ft_strjoin(char *s1, char *s2, size_t s2_len)
 int	ft_new_node(int fd, t_lst **head)
 {
 	t_lst	*new;
-	t_lst	**temp;
 
-	temp = head;
 	new = (t_lst *)malloc(sizeof(t_lst));
 	if (new == NULL)
 		return (0);
@@ -126,9 +86,8 @@ int	ft_new_node(int fd, t_lst **head)
 		*head = new;
 	else
 	{
-		while (*temp)
-			(*temp) = (*temp) -> next;
-		*temp = new;
+		new -> next = *head;
+		*head = new;
 	}
 	return (1);
 }

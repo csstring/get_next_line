@@ -1,12 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: schoe <schoe@student.42seoul.kr>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/06 13:26:11 by schoe             #+#    #+#             */
+/*   Updated: 2022/04/06 17:15:21 by schoe            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef GET_NEXT_LINE_BONUS_H
 # define GET_NEXT_LINE_BONUS_H
 
 # include <stdlib.h>
-
+# include <stdio.h>
 typedef struct s_lst
 {
 	int				fd_index;
-	int	i_EOF;
+	int				i_EOF;
 	char			*buff;
 	struct s_lst	*next;
 }	t_lst;

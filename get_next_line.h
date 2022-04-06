@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: schoe <schoe@student.42seoul.kr>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/06 13:25:52 by schoe             #+#    #+#             */
+/*   Updated: 2022/04/06 13:28:10 by schoe            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
@@ -6,7 +18,7 @@
 typedef struct s_lst
 {
 	int				fd_index;
-	int	i_EOF;
+	int				i_EOF;
 	char			*buff;
 	struct s_lst	*next;
 }	t_lst;
