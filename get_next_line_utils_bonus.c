@@ -6,7 +6,7 @@
 /*   By: schoe <schoe@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 11:29:52 by schoe             #+#    #+#             */
-/*   Updated: 2022/04/06 17:58:23 by schoe            ###   ########.fr       */
+/*   Updated: 2022/04/06 19:48:42 by schoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line_bonus.h"
@@ -21,10 +21,10 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
-void	ft_node_clear(t_lst **head, int fd)
+void	ft_node_clear(t_list **head, int fd)
 {
-	t_lst	*temp;
-	t_lst	*first_node;
+	t_list	*temp;
+	t_list	*first_node;
 
 	if ((*head)->fd_index == fd)
 	{
@@ -71,17 +71,17 @@ char	*ft_strjoin(char *s1, char *s2, size_t s2_len)
 	return (temp);
 }
 
-int	ft_new_node(int fd, t_lst **head)
+int	ft_new_node(int fd, t_list **head)
 {
-	t_lst	*new;
+	t_list	*new;
 
-	new = (t_lst *)malloc(sizeof(t_lst));
+	new = (t_list *)malloc(sizeof(t_list));
 	if (new == NULL)
 		return (0);
 	new -> fd_index = fd;
 	new -> next = NULL;
 	new -> buff = NULL;
-	new -> i_EOF = 1;
+	new -> i_eof = 1;
 	if (*head == NULL)
 		*head = new;
 	else
