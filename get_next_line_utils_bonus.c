@@ -6,7 +6,7 @@
 /*   By: schoe <schoe@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 11:29:52 by schoe             #+#    #+#             */
-/*   Updated: 2022/04/06 19:48:42 by schoe            ###   ########.fr       */
+/*   Updated: 2022/04/07 13:17:43 by schoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line_bonus.h"
@@ -35,15 +35,13 @@ void	ft_node_clear(t_list **head, int fd)
 	else
 	{
 		first_node = *head;
-		temp = fd_find(fd, head);
+		temp = fd_find(fd, *head);
 		while ((*head)-> next -> fd_index != fd)
 			*head = (*head)-> next;
 		(*head)->next = (*head)->next -> next;
 		free(temp);
 		*head = first_node;
 	}
-	if (*head == NULL)
-		free(head);
 }
 
 char	*ft_strjoin(char *s1, char *s2, size_t s2_len)

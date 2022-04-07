@@ -6,7 +6,7 @@
 /*   By: schoe <schoe@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 16:57:29 by schoe             #+#    #+#             */
-/*   Updated: 2022/04/06 19:48:40 by schoe            ###   ########.fr       */
+/*   Updated: 2022/04/07 13:17:45 by schoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line_bonus.h"
@@ -28,16 +28,13 @@ int	find_line(char *buff)
 	return (-1);
 }
 
-t_list	*fd_find(int fd, t_list **head)
+t_list	*fd_find(int fd, t_list *node)
 {
-	t_list	*temp;
-
-	temp = *head;
-	while (temp != NULL)
+	while (node != NULL)
 	{
-		if (temp -> fd_index == fd)
-			return (temp);
-		temp = temp -> next;
+		if (node -> fd_index == fd)
+			return (node);
+		node = node -> next;
 	}
 	return (NULL);
 }
@@ -82,25 +79,16 @@ char	*ft_get_line(int fd, t_list *node)
 
 char	*get_next_line(int fd)
 {
-	static t_list	**head;
+	static t_list	*list;
 	char			*str;
 
-	if (head == NULL)
-	{
-		head = (t_list **)malloc(sizeof(t_list *));
-		if (head == NULL)
+	if (!(fd_find(fd, list)))
+		if (!(ft_new_node(fd, &list)))
 			return (NULL);
-		*head = NULL;
-	}
-	if (!(fd_find(fd, head)))
-		if (!(ft_new_node(fd, head)))
-			return (NULL);
-	str = ft_get_line(fd, fd_find(fd, head));
+	str = ft_get_line(fd, fd_find(fd, list));
 	if (str == NULL)
 	{
-		ft_node_clear(head, fd);
-		if (*head == NULL)
-			head = NULL;
+		ft_node_clear(&list, fd);
 		return (NULL);
 	}
 	else if (find_line(str) != -1)

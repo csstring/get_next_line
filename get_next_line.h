@@ -6,7 +6,7 @@
 /*   By: schoe <schoe@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 13:25:52 by schoe             #+#    #+#             */
-/*   Updated: 2022/04/06 20:17:06 by schoe            ###   ########.fr       */
+/*   Updated: 2022/04/07 12:29:03 by schoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,8 @@
 
 typedef struct s_list
 {
-	int				fd_index;
 	int				i_eof;
 	char			*buff;
-	struct s_list	*next;
 }	t_list;
 
 int		find_line(char *buff);

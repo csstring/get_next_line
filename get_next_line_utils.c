@@ -6,7 +6,7 @@
 /*   By: schoe <schoe@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 11:29:52 by schoe             #+#    #+#             */
-/*   Updated: 2022/04/06 20:28:36 by schoe            ###   ########.fr       */
+/*   Updated: 2022/04/07 12:33:45 by schoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line.h"
@@ -44,21 +44,6 @@ char	*ft_strjoin(char *s1, char *s2, size_t s2_len)
 	temp[i] = '\0';
 	free(s1);
 	return (temp);
-}
-
-int	ft_new_node(int fd, t_list **head)
-{
-	t_list	*new;
-
-	new = (t_list *)malloc(sizeof(t_list));
-	if (new == NULL)
-		return (0);
-	new -> fd_index = fd;
-	new -> next = NULL;
-	new -> buff = NULL;
-	new -> i_eof = 1;
-	*head = new;
-	return (1);
 }
 
 char	*ft_strdup(char *s1, size_t size)
