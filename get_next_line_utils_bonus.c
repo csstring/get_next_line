@@ -6,14 +6,15 @@
 /*   By: schoe <schoe@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 11:29:52 by schoe             #+#    #+#             */
-/*   Updated: 2022/04/07 13:17:43 by schoe            ###   ########.fr       */
+/*   Updated: 2022/04/11 16:40:08 by schoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line_bonus.h"
+#include <stdlib.h>
 
-int	ft_strlen(char *str)
+size_t	ft_strlen(char *str)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	while (str[i])
@@ -35,7 +36,7 @@ void	ft_node_clear(t_list **head, int fd)
 	else
 	{
 		first_node = *head;
-		temp = fd_find(fd, *head);
+		temp = ft_fd_find(fd, *head);
 		while ((*head)-> next -> fd_index != fd)
 			*head = (*head)-> next;
 		(*head)->next = (*head)->next -> next;
@@ -54,7 +55,7 @@ char	*ft_strjoin(char *s1, char *s2, size_t s2_len)
 	i = 0;
 	k = 0;
 	if (s1 == NULL)
-		return (ft_strdup(s2, s2_len));
+		return (ft_strndup(s2, s2_len));
 	s1_len = ft_strlen(s1);
 	temp = (char *)malloc(sizeof(char) * (s1_len + s2_len + 1));
 	if (temp == NULL)
@@ -80,26 +81,21 @@ int	ft_new_node(int fd, t_list **head)
 	new -> next = NULL;
 	new -> buff = NULL;
 	new -> i_eof = 1;
-	if (*head == NULL)
-		*head = new;
-	else
-	{
-		new -> next = *head;
-		*head = new;
-	}
+	new -> next = *head;
+	*head = new;
 	return (1);
 }
 
-char	*ft_strdup(char *s1, int size)
+char	*ft_strndup(char *s1, size_t n)
 {
-	int		i;
+	size_t	i;
 	char	*s2;
 
 	i = 0;
-	s2 = (char *)malloc(sizeof(char) * (size + 1));
+	s2 = (char *)malloc(sizeof(char) * (n + 1));
 	if (s2 == NULL)
 		return (NULL);
-	while (i < size)
+	while (i < n)
 	{
 		s2[i] = s1[i];
 		i++;

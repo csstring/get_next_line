@@ -6,15 +6,15 @@
 /*   By: schoe <schoe@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 16:57:29 by schoe             #+#    #+#             */
-/*   Updated: 2022/04/07 13:17:45 by schoe            ###   ########.fr       */
+/*   Updated: 2022/04/11 16:40:42 by schoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line_bonus.h"
-#include <unistd.h>
+#include <stdlib.h>
 
-int	find_line(char *buff)
+ssize_t	ft_find_line(char *buff)
 {
-	int	i;
+	ssize_t	i;
 
 	i = 0;
 	if (buff == NULL)
@@ -28,7 +28,7 @@ int	find_line(char *buff)
 	return (-1);
 }
 
-t_list	*fd_find(int fd, t_list *node)
+t_list	*ft_fd_find(int fd, t_list *node)
 {
 	while (node != NULL)
 	{
@@ -39,12 +39,12 @@ t_list	*fd_find(int fd, t_list *node)
 	return (NULL);
 }
 
-void	clear_buf(t_list *node, int i_lf, int len)
+void	ft_clear_buf(t_list *node, size_t i_lf, size_t len)
 {
 	char	*temp;
 
 	if ((node -> buff)[i_lf + 1] != '\0')
-		temp = ft_strdup((node -> buff) + (i_lf + 1), len - i_lf);
+		temp = ft_strndup((node -> buff) + (i_lf + 1), len - i_lf);
 	else
 		temp = NULL;
 	free(node -> buff);
@@ -54,21 +54,21 @@ void	clear_buf(t_list *node, int i_lf, int len)
 char	*ft_get_line(int fd, t_list *node)
 {
 	char	buf[BUFFER_SIZE];
-	int		len;
+	ssize_t	len;
 
-	if (find_line(node -> buff) != -1)
-		clear_buf(node, find_line(node -> buff), ft_strlen(node -> buff));
 	if (node -> i_eof == 0)
 	{
 		free(node -> buff);
 		return (NULL);
 	}
-	while (find_line(node -> buff) == -1)
+	if (ft_find_line(node -> buff) != -1)
+		ft_clear_buf(node, ft_find_line(node -> buff), ft_strlen(node -> buff));
+	while (ft_find_line(node -> buff) == -1)
 	{
 		len = read(fd, buf, BUFFER_SIZE);
 		if (len > 0)
 			node -> buff = ft_strjoin(node -> buff, buf, len);
-		else
+		if (len < BUFFER_SIZE && ft_find_line(node -> buff) == -1)
 		{
 			node -> i_eof = 0;
 			return (node -> buff);
@@ -82,17 +82,17 @@ char	*get_next_line(int fd)
 	static t_list	*list;
 	char			*str;
 
-	if (!(fd_find(fd, list)))
+	if (!(ft_fd_find(fd, list)))
 		if (!(ft_new_node(fd, &list)))
 			return (NULL);
-	str = ft_get_line(fd, fd_find(fd, list));
+	str = ft_get_line(fd, ft_fd_find(fd, list));
 	if (str == NULL)
 	{
 		ft_node_clear(&list, fd);
 		return (NULL);
 	}
-	else if (find_line(str) != -1)
-		return (ft_strdup(str, find_line(str) + 1));
+	else if (ft_find_line(str) != -1)
+		return (ft_strndup(str, ft_find_line(str) + 1));
 	else
-		return (ft_strdup(str, ft_strlen(str)));
+		return (ft_strndup(str, ft_strlen(str)));
 }
